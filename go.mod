@@ -1,4 +1,4 @@
-module social
+module github.com/xHappyface/social
 
 go 1.20
 

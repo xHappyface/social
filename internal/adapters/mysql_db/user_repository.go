@@ -6,9 +6,10 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"social/internal/core/errors"
-	"social/internal/core/user"
 	"time"
+
+	"github.com/xHappyface/social/internal/core/errors"
+	"github.com/xHappyface/social/internal/core/user"
 )
 
 // create a structure that will fulfill the needs of the core port

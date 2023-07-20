@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
-	"social/internal/core/session"
+
+	"github.com/xHappyface/social/internal/core/session"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"

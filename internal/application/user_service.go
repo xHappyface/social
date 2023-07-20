@@ -2,7 +2,7 @@
 
 package application
 
-import "social/internal/core/user"
+import "github.com/xHappyface/social/internal/core/user"
 
 // define a service interface that requires the same functionality as the repo interface
 
