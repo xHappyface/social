@@ -1,2 +1,3 @@
 /web/server.crt
 /web/server.key
+.env
