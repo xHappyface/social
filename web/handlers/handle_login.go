@@ -9,7 +9,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 	}
 	switch r.Method {
 	case http.MethodGet:
-		http.ServeFile(w, r, "./html_css/static/index.html")
+		http.ServeFile(w, r, "./web/html_css/static/index.html")
 	default:
 		http.NotFound(w, r)
 	}

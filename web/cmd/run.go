@@ -20,7 +20,7 @@ func RunWebServer(userService database.UserService) {
 		IdleTimeout:    15 * time.Minute,
 		MaxHeaderBytes: 4 << 10,
 	}
-	fs := http.FileServer(http.Dir("./html_css/static"))
+	fs := http.FileServer(http.Dir("./web/html_css/static"))
 	userHandler := handlers.NewUserHandlerImpl(web.NewUserHandler(userService))
 	mux.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
@@ -32,7 +32,7 @@ func RunWebServer(userService database.UserService) {
 			fs.ServeHTTP(w, r)
 		}
 	}))
-	if err := server.ListenAndServeTLS("./server.crt", "./server.key"); err != nil {
+	if err := server.ListenAndServeTLS("./web/server.crt", "./web/server.key"); err != nil {
 		log.Fatalln(err)
 	}
 }

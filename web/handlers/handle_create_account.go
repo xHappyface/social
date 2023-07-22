@@ -18,7 +18,7 @@ func (hn *UserHandlerImpl) HandleCreateAccount(w http.ResponseWriter, r *http.Re
 	}
 	switch r.Method {
 	case http.MethodGet:
-		tpl, err := template.ParseFiles("./html_css/templates/create_account.html")
+		tpl, err := template.ParseFiles("./web/html_css/templates/create_account.html")
 		if err != nil {
 			http.Error(w, "", http.StatusInternalServerError)
 			return
@@ -40,24 +40,24 @@ func (hn *UserHandlerImpl) HandleCreateAccount(w http.ResponseWriter, r *http.Re
 		if err := r.ParseForm(); err != nil {
 			http.Error(w, "", http.StatusInternalServerError)
 		}
-		exp := `^\b[a-zA-Z0-9\Q.?!@#$%^*-_=+\E]+\b$`
+		exp := `^[a-zA-Z0-9\Q.?!@#$%^*-_=+\E]+$`
 		username := r.Form.Get("Username")
 		password := r.Form.Get("Password")
 		ok, err := regexp.MatchString(exp, username)
-		if err != nil || !(len(username) >= _MIN_LEN && len(username) <= _MAX_LEN) {
+		if err != nil {
 			http.Error(w, "", http.StatusInternalServerError)
 			return
 		}
-		if !ok {
+		if !ok || !(len(username) >= _MIN_LEN && len(username) <= _MAX_LEN) {
 			http.Redirect(w, r, "/create_account", http.StatusPermanentRedirect)
 			return
 		}
 		ok, err = regexp.MatchString(exp, password)
-		if err != nil || !(len(password) >= _MIN_LEN && len(password) <= _MAX_LEN) {
+		if err != nil {
 			http.Error(w, "", http.StatusInternalServerError)
 			return
 		}
-		if !ok {
+		if !ok || !(len(password) >= _MIN_LEN && len(password) <= _MAX_LEN) {
 			http.Redirect(w, r, "/create_account", http.StatusPermanentRedirect)
 			return
 		}
