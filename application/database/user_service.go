@@ -1,8 +1,11 @@
 // connect to core and not to adapater
 
-package application
+package database
 
-import "github.com/xHappyface/social/internal/core/user"
+import (
+	"github.com/xHappyface/social/core/user"
+	"github.com/xHappyface/social/internal/ports"
+)
 
 // define a service interface that requires the same functionality as the repo interface
 
@@ -17,13 +20,13 @@ type UserService interface {
 // the service struct will act as the controller so we never directly interact with the repository
 
 type UserServiceImpl struct {
-	userRepo user.UserRepository
+	userRepo ports.UserRepository
 }
 
 // fulfilling the interface by giving the service struct the required functionality
 // will allow us to return the struct as the service interface type
 
-func NewUserService(userRepo user.UserRepository) UserService {
+func NewUserService(userRepo ports.UserRepository) UserService {
 	return &UserServiceImpl{
 		userRepo: userRepo,
 	}

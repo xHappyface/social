@@ -66,8 +66,16 @@ fieldset>legend {
     font-weight: bold;
 }
 
+fieldset>form>p.error_message {
+    margin-bottom: 1rem;
+}
+
 footer {
     height: 40px;
     width: 100%;
     font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.error_message {
+    color: red;
 }

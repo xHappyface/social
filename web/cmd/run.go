@@ -1,12 +1,16 @@
-package main
+package cmd
 
 import (
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/xHappyface/social/application/database"
+	"github.com/xHappyface/social/application/web"
+	"github.com/xHappyface/social/web/handlers"
 )
 
-func main() {
+func RunWebServer(userService database.UserService) {
 	mux := http.NewServeMux()
 	server := http.Server{
 		Handler:        mux,
@@ -14,27 +18,18 @@ func main() {
 		ReadTimeout:    10 * time.Minute,
 		WriteTimeout:   10 * time.Minute,
 		IdleTimeout:    15 * time.Minute,
-		MaxHeaderBytes: 1 << 10,
+		MaxHeaderBytes: 4 << 10,
 	}
 	fs := http.FileServer(http.Dir("./html_css/static"))
+	userHandler := handlers.NewUserHandlerImpl(web.NewUserHandler(userService))
 	mux.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		switch r.Method {
-		case http.MethodGet:
-			switch r.URL.Path {
-			case "/", "/index":
-				http.ServeFile(w, r, "./html_css/static/index.html")
-			case "/create_account":
-				http.ServeFile(w, r, "./html_css/static/create_account.html")
-			default:
-				fs.ServeHTTP(w, r)
-			}
-		case http.MethodPost:
-			switch r.URL.Path {
-			default:
-				http.NotFound(w, r)
-			}
+		switch r.URL.Path {
+		case "/", "/index", "/login":
+			handlers.HandleLogin(w, r)
+		case "/create_account":
+			userHandler.HandleCreateAccount(w, r)
 		default:
-			http.NotFound(w, r)
+			fs.ServeHTTP(w, r)
 		}
 	}))
 	if err := server.ListenAndServeTLS("./server.crt", "./server.key"); err != nil {

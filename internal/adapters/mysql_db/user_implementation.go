@@ -8,8 +8,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/xHappyface/social/internal/core/errors"
-	"github.com/xHappyface/social/internal/core/user"
+	"github.com/xHappyface/social/core/errors"
+	"github.com/xHappyface/social/core/user"
+	"github.com/xHappyface/social/internal/ports"
 )
 
 // create a structure that will fulfill the needs of the core port
@@ -23,7 +24,7 @@ type UserRepoImpl struct {
 // fulfilling the port interface will allow you to return the above structure
 // in place of the core port type
 
-func NewUserRepoImpl(db *sql.DB, ctxTimeout time.Duration) user.UserRepository {
+func NewUserRepoImpl(db *sql.DB, ctxTimeout time.Duration) ports.UserRepository {
 	return &UserRepoImpl{
 		db:         db,
 		ctxTimeout: ctxTimeout,
