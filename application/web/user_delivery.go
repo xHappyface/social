@@ -30,6 +30,10 @@ func (h *UserHandler) ReadByID(userID string) (*user.User, error) {
 	return h.userService.ReadByID(userID)
 }
 
+func (h *UserHandler) ReadByName(userName string) (*user.User, error) {
+	return h.userService.ReadByName(userName)
+}
+
 func (h *UserHandler) Update(user *user.User) error {
 	return h.userService.Update(user)
 }

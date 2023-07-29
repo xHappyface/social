@@ -7,6 +7,7 @@ import "github.com/xHappyface/social/core/user"
 type UserRepository interface {
 	Create(*user.User) error
 	ReadByID(string) (*user.User, error)
+	ReadByName(string) (*user.User, error)
 	Update(*user.User) error
 	DeleteByID(string) error
 }

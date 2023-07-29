@@ -25,6 +25,16 @@
                     *Allowed characters: a-z, A-Z, 0-9, _<br />
                     *Length Paramters: 5-36 characters long
                 </p>
+                {{ else if .UsernameExistsError }}
+                <p class="error_message">
+                    INVALID USERNAME:<br />
+                    Username exists. Try again...
+                </p>
+                {{ else if .UnexpectedError }}
+                <p class="error_message">
+                    UNEXPECTED ERROR:<br />
+                    Apologies. Try again...
+                </p>
                 {{ end }}
                 <p>
                     <label for="Username">Username: </label>

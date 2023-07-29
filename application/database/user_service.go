@@ -12,6 +12,7 @@ import (
 type UserService interface {
 	Create(*user.User) error
 	ReadByID(string) (*user.User, error)
+	ReadByName(string) (*user.User, error)
 	Update(*user.User) error
 	DeleteByID(string) error
 }
@@ -40,6 +41,10 @@ func (serv *UserServiceImpl) Create(user *user.User) error {
 
 func (serv *UserServiceImpl) ReadByID(userID string) (*user.User, error) {
 	return serv.userRepo.ReadByID(userID)
+}
+
+func (serv *UserServiceImpl) ReadByName(userName string) (*user.User, error) {
+	return serv.userRepo.ReadByName(userName)
 }
 
 func (serv *UserServiceImpl) Update(user *user.User) error {

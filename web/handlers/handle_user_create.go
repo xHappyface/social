@@ -26,7 +26,7 @@ func (hn *UserHandlerImpl) HandleUserCreate(w http.ResponseWriter, r *http.Reque
 		}
 		if !validUsername || !validPassword {
 			redirectURL := fmt.Sprintf("/create_account?username_error=%t&password_error=%t", !validUsername, !validPassword)
-			http.Redirect(w, r, redirectURL, http.StatusTemporaryRedirect)
+			http.Redirect(w, r, redirectURL, http.StatusPermanentRedirect)
 			return
 		}
 		hash, err := bcrypt.GenerateFromPassword([]byte(password), 16)
@@ -39,7 +39,14 @@ func (hn *UserHandlerImpl) HandleUserCreate(w http.ResponseWriter, r *http.Reque
 			http.Error(w, "", http.StatusInternalServerError)
 			return
 		} else if err == nil {
-			// handle case where userID already exists.
+			http.Redirect(w, r, "/create_account?unexpected_error=true", http.StatusTemporaryRedirect)
+			return
+		}
+		if _, err = hn.ReadByName(user.Username); err != errors.ErrNoRowsRetrieved && err != nil {
+			http.Error(w, "", http.StatusInternalServerError)
+			return
+		} else if err == nil {
+			http.Redirect(w, r, "/create_account?username_exists_error=true", http.StatusTemporaryRedirect)
 			return
 		}
 		if err = hn.Create(user); err != nil {

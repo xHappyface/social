@@ -8,6 +8,7 @@ import (
 type UserHandler interface {
 	Create(*user.User) error
 	ReadByID(string) (*user.User, error)
+	ReadByName(string) (*user.User, error)
 	Update(*user.User) error
 	DeleteByID(string) error
 }
@@ -28,6 +29,10 @@ func (hn *UserHandlerImpl) Create(user *user.User) error {
 
 func (hn *UserHandlerImpl) ReadByID(userID string) (*user.User, error) {
 	return hn.h.ReadByID(userID)
+}
+
+func (hn *UserHandlerImpl) ReadByName(userName string) (*user.User, error) {
+	return hn.h.ReadByName(userName)
 }
 
 func (hn UserHandlerImpl) Update(user *user.User) error {

@@ -75,6 +75,28 @@ func (repo *UserRepoImpl) ReadByID(userID string) (*user.User, error) {
 	return &usr, nil
 }
 
+func (repo *UserRepoImpl) ReadByName(userName string) (*user.User, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), repo.ctxTimeout)
+	defer cancel()
+	stmt := fmt.Sprintf("select * from users where username=%q;", userName)
+	rows, err := repo.db.QueryContext(ctx, stmt)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	if !rows.Next() {
+		return nil, errors.ErrNoRowsRetrieved
+	}
+	var usr user.User
+	if err = rows.Scan(&usr.ID, &usr.Username, &usr.Password, &usr.DateCreated); err != nil {
+		return nil, err
+	}
+	if rows.NextResultSet() {
+		return nil, errors.ErrUnexpectedNextResultSet
+	}
+	return &usr, nil
+}
+
 func (repo *UserRepoImpl) Update(usr *user.User) error {
 	ctx, cancel := context.WithTimeout(context.Background(), repo.ctxTimeout)
 	defer cancel()
