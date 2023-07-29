@@ -30,6 +30,8 @@ func RunWebServer(userService database.UserService) {
 			handlers.HandleCreateAccount(w, r)
 		case "/user/create":
 			userHandler.HandleUserCreate(w, r)
+		case "/user/read":
+			userHandler.HandleUserRead(w, r)
 		default:
 			fs.ServeHTTP(w, r)
 		}

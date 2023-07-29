@@ -18,7 +18,20 @@
     <main>
         <fieldset>
             <legend>Login</legend>
-            <form action="/login" method="post">
+            <form action="/user/read" method="post">
+                {{ if .InvalidUsernameError }}
+                <p class="error_message">
+                    INVALID USERNAME
+                </p>
+                {{ else if .InvalidPasswordError }}
+                <p class="error_message">
+                    INVALID PASSWORD
+                </p>
+                {{ else if .UnexpectedError }}
+                <p class="error_message">
+                    UNEXPECTED ERROR
+                </p>
+                {{ end }}
                 <p>
                     <label for="Username">Username: </label>
                     <input type="text" name="Username" id="Username" required />

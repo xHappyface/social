@@ -13,8 +13,8 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     background-color: darkslateblue;
     color: whitesmoke;
 }
@@ -31,8 +31,8 @@ h1 {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
 }
@@ -42,8 +42,14 @@ main {
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+}
+
+main.profile {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 fieldset {
@@ -51,8 +57,8 @@ fieldset {
     width: 400px;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     align-items: center;
+    justify-content: space-evenly;
     text-align: center;
     font-family: monospace;
     border: 0;
@@ -78,4 +84,10 @@ footer {
 
 .error_message {
     color: red;
+}
+
+div.sidebar {
+    height: 100%;
+    width: 40rem;
+    background-color: midnightblue;
 }

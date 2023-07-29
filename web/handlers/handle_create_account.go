@@ -25,47 +25,37 @@ func HandleCreateAccount(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "", http.StatusInternalServerError)
 		}
 	case http.MethodPost:
-		var usernameError, passwordError, usernameExistsError, unexpectedError bool
 		queryParams := r.URL.Query()
-		var boolean bool
+		var createAccountErrors CreateAccountErrors
 		if queryParams.Has("username_error") {
-			boolean, err = strconv.ParseBool(queryParams.Get("username_error"))
+			createAccountErrors.UsernameError, err = strconv.ParseBool(queryParams.Get("username_error"))
 			if err != nil {
 				http.Error(w, "", http.StatusInternalServerError)
 				return
 			}
-			usernameError = boolean
 		}
 		if queryParams.Has("password_error") {
-			boolean, err = strconv.ParseBool(queryParams.Get("password_error"))
+			createAccountErrors.PasswordError, err = strconv.ParseBool(queryParams.Get("password_error"))
 			if err != nil {
 				http.Error(w, "", http.StatusInternalServerError)
 				return
 			}
-			passwordError = boolean
 		}
 		if queryParams.Has("username_exists_error") {
-			boolean, err = strconv.ParseBool(queryParams.Get("username_exists_error"))
+			createAccountErrors.UsernameExistsError, err = strconv.ParseBool(queryParams.Get("username_exists_error"))
 			if err != nil {
 				http.Error(w, "", http.StatusInternalServerError)
 				return
 			}
-			usernameExistsError = boolean
 		}
 		if queryParams.Has("unexpected_error") {
-			boolean, err = strconv.ParseBool(queryParams.Get("unexpected_error"))
+			createAccountErrors.UnexpectedError, err = strconv.ParseBool(queryParams.Get("unexpected_error"))
 			if err != nil {
 				http.Error(w, "", http.StatusInternalServerError)
 				return
 			}
-			unexpectedError = boolean
 		}
-		if err = tpl.Execute(w, CreateAccountErrors{
-			UsernameError:       usernameError,
-			PasswordError:       passwordError,
-			UsernameExistsError: usernameExistsError,
-			UnexpectedError:     unexpectedError,
-		}); err != nil {
+		if err = tpl.Execute(w, createAccountErrors); err != nil {
 			http.Error(w, "", http.StatusInternalServerError)
 		}
 	default:
