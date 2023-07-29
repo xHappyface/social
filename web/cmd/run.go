@@ -27,7 +27,9 @@ func RunWebServer(userService database.UserService) {
 		case "/", "/index", "/login":
 			handlers.HandleLogin(w, r)
 		case "/create_account":
-			userHandler.HandleCreateAccount(w, r)
+			handlers.HandleCreateAccount(w, r)
+		case "/user/create":
+			userHandler.HandleUserCreate(w, r)
 		default:
 			fs.ServeHTTP(w, r)
 		}

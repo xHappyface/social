@@ -18,10 +18,11 @@
     <main>
         <fieldset>
             <legend>Create Account</legend>
-            <form action="/create_account" method="post">
-                {{ if . }}
+            <form action="/user/create" method="post">
+                {{ if .UsernameError }}
                 <p class="error_message">
-                    *Allowed characters: a-z, A-Z, 0-9, .?!@#$%^*-_=+<br />
+                    INVALID USERNAME:<br />
+                    *Allowed characters: a-z, A-Z, 0-9, _<br />
                     *Length Paramters: 5-36 characters long
                 </p>
                 {{ end }}
@@ -29,6 +30,13 @@
                     <label for="Username">Username: </label>
                     <input type="text" name="Username" id="Username" required />
                 </p>
+                {{ if .PasswordError }}
+                <br />
+                <p class="error_message">
+                    INVALID PASSWORD:<br />
+                    *Length Paramters: 5-36 characters long
+                </p>
+                {{ end }}
                 <p>
                     <label for="Password">Password: </label>
                     <input type="password" name="Password" id="Password" required />
